@@ -59,6 +59,8 @@ const userModule = {
       commit('SET_TOKEN', '');
       // 清除用户信息
       commit('SET_USERINFO', '');
+
+      window.location.reload();
     },
   },
 };
