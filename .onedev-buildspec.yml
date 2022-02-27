@@ -21,7 +21,13 @@ jobs:
       - npm install
       - npx vue-cli-service build
       - npx vue-cli-service lint
+      - ''
+      - zip -r dist.zip dist
     useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PublishArtifactStep
+    name: publish artifacts
+    artifacts: dist.zip
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger {}
