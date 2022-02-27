@@ -39,6 +39,27 @@ const userModule = {
         });
       });
     },
+    login(context, { telephone, password }) {
+      return new Promise((resolve, reject) => {
+        userService.login({ telephone, password }).then((res) => {
+          // 保存token
+          context.commit('SET_TOKEN', res.data.data.token);
+          return userService.info();
+        }).then((res) => {
+          // 保存用户信息
+          context.commit('SET_USERINFO', res.data.data.user);
+          resolve(res);
+        }).catch((err) => {
+          reject(err);
+        });
+      });
+    },
+    logout({ commit }) {
+      // 清除token
+      commit('SET_TOKEN', '');
+      // 清除用户信息
+      commit('SET_USERINFO', '');
+    },
   },
 };
 
