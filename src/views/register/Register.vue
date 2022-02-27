@@ -18,7 +18,7 @@
 
             <b-form-group label="手机号">
               <b-form-input
-                id="input-1"
+                id="input-2"
                 v-model="$v.user.telephone.$model"
                 type="number"
                 placeholder="手机号"
@@ -40,7 +40,7 @@
 
             <b-form-group label="密码">
               <b-form-input
-                id="input-1"
+                id="input-3"
                 v-model="$v.user.password.$model"
                 type="password"
                 placeholder="密码"
@@ -65,6 +65,7 @@
 <script>
 import { minLength, required } from 'vuelidate/lib/validators';
 import customValidator from '@/helper/validator';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Register',
@@ -94,12 +95,29 @@ export default {
     },
   },
   methods: {
+    ...mapActions('userModule', { userRegister: 'register' }),
     validateState(name) {
       // es6结构赋值
       const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;
     },
     register() {
+      // 验证数据
+      this.$v.user.$touch();
+      if (this.$v.user.$anyError) {
+        return;
+      }
+      // 请求api
+      this.userRegister(this.user).then(() => {
+        // 跳转主页
+        this.$router.replace({ name: 'Home' });
+      }).catch((err) => {
+        this.$bvToast.toast(err.response.data.msg, {
+          title: '数据验证错误',
+          variant: 'danger',
+          solid: true,
+        });
+      });
       console.log('register');
     },
   },
