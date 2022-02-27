@@ -20,10 +20,10 @@
               <b-dropdown-item @click="logout">登出</b-dropdown-item>
             </b-nav-item-dropdown>
             <div v-if="!userInfo">
-              <b-nav-item v-if="$route.name != 'Login'"
+              <b-nav-item v-if="$route.name !== 'Login'"
                           @click="$router.replace({name: 'Login'})">登录
               </b-nav-item>
-              <b-nav-item v-if="$route.name != 'Register'"
+              <b-nav-item v-if="$route.name !== 'Register'"
                           @click="$router.replace({name: 'Register'})">注册
               </b-nav-item>
             </div>
