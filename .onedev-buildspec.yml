@@ -22,12 +22,12 @@ jobs:
       - npx vue-cli-service build
       - npx vue-cli-service lint
       - ''
-      - zip -r dist.zip dist
+      - tar zcvf dist.tgz dist
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !PublishArtifactStep
     name: publish artifacts
-    artifacts: dist.zip
+    artifacts: dist.tgz
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger {}
